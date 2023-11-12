@@ -53,15 +53,14 @@ class BoardMovementsFactory {
         val whitePawn = PieceImpl(Color.WHITE, Type.PAWN, listOf(composeMovements, composeMovements2))
         val blackPawn = PieceImpl(Color.BLACK, Type.PAWN, listOf(composeMovements3, composeMovements4))
         //------------------------
-        val movementChange3 = HorizontalAndVerticalMovement(8, 8, 8, 8)
-        val movement2List = ComposeMovement(listOf(movementChange3))
+        val movementChange3 = listOf(ComposeMovement(listOf(HorizontalAndVerticalMovement(8, 8, 8, 8),HorizontalTrepassinValidator())))
         //movement2List.add(movementChange3)
-        val whiteTower = PieceImpl(Color.WHITE, Type.TOWER, listOf( movement2List))
-        val blackTower = PieceImpl(Color.BLACK, Type.TOWER, listOf( movement2List))
+        val whiteTower = PieceImpl(Color.WHITE, Type.TOWER, movementChange3)
+        val blackTower = PieceImpl(Color.BLACK, Type.TOWER, movementChange3)
         //------------------------
 
-        val movementChange4 = ComposeMovement(listOf(DiagonalMovement(1, 1, 1, 1)))
-        val movement3 = ComposeMovement(listOf(HorizontalAndVerticalMovement(1, 1, 1, 1)))
+        val movementChange4 = ComposeMovement(listOf(DiagonalMovement(1, 1, 1, 1),DiagonalTrepassinStrategy()))
+        val movement3 = ComposeMovement(listOf(HorizontalAndVerticalMovement(1, 1, 1, 1), HorizontalTrepassinValidator()))
         val movement2List1 = listOf(movementChange4, movement3)
         val whiteKing = PieceImpl(Color.WHITE, Type.KING, movement2List1)
         val blackKing = PieceImpl(Color.BLACK, Type.KING, movement2List1)

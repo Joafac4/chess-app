@@ -18,33 +18,17 @@ public class CheckMate implements WinCondition {
     @Override
     public boolean winCondition(Board board, Position initial, Position finalPosition) {
         Piece piece = board.getPiece(finalPosition);
-        if (piece.getColor() == Color.WHITE) {color = Color.BLACK;}
-        else {color = Color.WHITE;}
-
-
-        List<Position> positions = board.getAllPositions();
-        List<Position> colorInCheckPositions = getPositionsByPieceColor(board, positions, color);
-        for (Position position : colorInCheckPositions) {
-            Piece piece1 = board.getPiece(position);
-                    for (Position position1 : positions) {
-                        if (position != position1) {
-                            Board board1 = board.copy();
-                            if (piece1.moveValidation(position, position1, board1)) {
-                                if(position1 != board1.getKingPosition(color)){
-                                   if (checkValidator.validate(position, position1, board1)) {
-                                   if(piece1.getType() != Type.KING && piece1.getType() != Type.FRSTKING){
-
-                                            return false;
-                                    }else{
-                                        if(checkValidator.validate(position,finalPosition,board1)){return false;}
-                                        if (checkValidator.validate(position, position, board1)) {return false;}
-                              }
-                            }
-                        }}
-                    }}
-
+        if (piece.getColor() == Color.WHITE) {
+            color = Color.BLACK;
+        } else {
+            color = Color.WHITE;
         }
-        return true;
+
+        boolean kingIsThreatend = kingIsThreatend(board, finalPosition, color);
+        boolean kingIsAbleToMove = kingIsAbleToMove(board, color);
+        boolean kingCanNotBeProtected = kingCanNotBeProtected(board, color);
+
+        return (kingIsThreatend && !kingIsAbleToMove && kingCanNotBeProtected);
     }
 
 
@@ -55,11 +39,68 @@ public class CheckMate implements WinCondition {
             Piece piece = board.getPiece(position);
             if (piece != null) {
                 if (piece.getColor() == color) {
+                    if(piece.getType() != Type.KING && piece.getType() != Type.FRSTKING){
                     positions.add(position);
-                }
+                }}
             }
         }
         return positions;
+    }
+
+
+    private boolean kingIsThreatend(Board board, Position finalPosition, Color color){
+        Position kingPosition = board.getKingPosition(color);
+        Piece piece = board.getPiece(finalPosition);
+        Board board1 = board.copy();
+        return piece.moveValidation(finalPosition,kingPosition,board1);
+    }
+    private boolean kingIsAbleToMove(Board board, Color color){
+        Position position = board.getKingPosition(color);
+        Piece piece = board.getPiece(position);
+        List<Position> positions = board.getAllPositions();
+        for (Position position1 : positions) {
+            if (position != position1) {
+                Board board1 = board.copy();
+                if (board1.getPiece(position1) != null) {
+                    if(board1.getPiece(position1).getColor() != color){
+                        if (piece.moveValidation(position, position1, board1)) {
+                            if (checkValidator.validate(position, position1, board1)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+                else{
+                if (piece.moveValidation(position, position1, board1)) {
+                        if (checkValidator.validate(position, position1, board1)) {
+                            return true;
+                        }
+                }
+            }}
+        }
+        return false;
+    }
+
+    private boolean kingCanNotBeProtected(Board board, Color color){
+        List<Position> allPositions = board.getAllPositions();
+        List<Position> positions = getPositionsByPieceColor(board,allPositions,color);
+        Position kingPosition = board.getKingPosition(color);
+        for (Position position : positions) {
+            Piece piece = board.getPiece(position);
+            for (Position position1 : allPositions) {
+                if (position != position1) {
+                    if(position1 != kingPosition){
+                    Board board1 = board.copy();
+                    if (piece.moveValidation(position, position1, board1)) {
+                        if (checkValidator.validate(position, position1, board1)) {
+                                return false;
+                            }
+                        }
+                    }}
+                }
+            }
+
+        return true;
     }
 
 

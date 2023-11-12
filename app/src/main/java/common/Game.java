@@ -44,7 +44,9 @@ public class Game {
                 BoardResult br = this.makeMove(initial,finalPosition);
                 if (br.isChanged()){
                     this.players = players1;
-                    if (gameMode.getWinCondition().winCondition(br.getBoardResult(),initial,finalPosition)){finish = true;}
+                    if (checkIsFinished(br.getBoardResult(),initial,finalPosition)){
+                        finish = true;
+                    }
             }}
 
         return new Game(this.gameMode,this.board,this.players,finish);
@@ -130,6 +132,10 @@ public class Game {
 
     public boolean getIsFinished(){
         return isFinished;
+    }
+
+    private boolean checkIsFinished(Board board, Position initial, Position finalPosition) {
+        return gameMode.getWinCondition().winCondition(board,initial,finalPosition);
     }
 
 
