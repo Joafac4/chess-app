@@ -19,7 +19,7 @@ class ClientMain : AbstractChessGameApplication() {
 
     init {
         val client = clientManager.createClient()
-        Thread.sleep(10000)
+        Thread.sleep(1000)
         client.connect()
     }
 

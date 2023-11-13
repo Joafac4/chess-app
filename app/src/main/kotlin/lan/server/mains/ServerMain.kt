@@ -28,7 +28,7 @@ class ServerMain : AbstractChessGameApplication() {
     override fun start(primaryStage: Stage) {
         val root = serverManager.getGameViewInstance()
         primaryStage.scene = Scene(root)
-        primaryStage.show()
+        //primaryStage.show()
     }
 
 
