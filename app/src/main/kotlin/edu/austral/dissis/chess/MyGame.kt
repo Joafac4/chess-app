@@ -13,7 +13,9 @@ fun createInitialChessBoard(): Board {
     /*fun createTestChessBoard(): Board {
         return BoardFactory().createTestChessBoard()
     }*/
-
+    fun createChancellorBoard(): Board {
+        return BoardFactory().chancellorChess()
+    }
 
     fun createGame(gm: GameMode): Game {
         return GameFactory().createNormalGame(gm)
@@ -32,8 +34,16 @@ fun createInitialChessBoard(): Board {
         return GameModeFactory().createGameMode()
     }
 
-    fun createButterflyGameMode(): GameMode{
-        return GameModeFactory().createButterflyGameMode()
+    fun createRetireGameMode(): GameMode {
+        return GameModeFactory().createRetiredChessGameMode()
+    }
+
+    fun createRetireBoard(): Board{
+        return BoardFactory().createRetiredChessBoard()
+    }
+
+    fun createChancellorGameMode(): GameMode {
+        return GameModeFactory().createChancellorChessGameMode()
     }
 
 

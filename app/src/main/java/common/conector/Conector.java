@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Conector {
     public static BoardSize adaptBoard(Board board){
-        return new BoardSize(board.getRow(), board.getColumn());
+        return new BoardSize(board.getColumn(), board.getRow());
     }
     public static Position adaptPosition(common.Position position){
         return new Position(position.getRow()  , position.getColumn()  );
@@ -39,6 +39,7 @@ public class Conector {
             case FRSTKING -> "king";
             case FIRSTPAWN -> "pawn";
             case FIRSTTOWER -> "rook";
+            case CHANCELLOR -> "chancellor";
             default -> "empty";
         };
     }

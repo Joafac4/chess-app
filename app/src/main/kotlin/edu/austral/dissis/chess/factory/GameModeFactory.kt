@@ -21,6 +21,15 @@ class GameModeFactory  {
         return gameMode
     }
 
+    fun createRetiredChessGameMode(): GameMode {
+        val gameMode = GameMode(createRetireBoard() ,createBoardMovements(), createValidators(), NormalTurn(), CheckMate())
+        return gameMode
+    }
+
+    fun createChancellorChessGameMode(): GameMode {
+        val gameMode = GameMode(createChancellorBoard() ,createBoardMovements(), createValidators(), NormalTurn(), CheckMate())
+        return gameMode
+    }
     fun createButterflyGameMode(): GameMode{
         val board = createInitialChessBoard() // habria que crear el butterfly
         val gameMode = GameMode(board , createBoardMovements(), createValidators(), NormalTurn(), CheckMate())

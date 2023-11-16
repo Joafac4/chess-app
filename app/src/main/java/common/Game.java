@@ -12,6 +12,7 @@ public class Game {
     private Board board;
     private List<Player> players;
     private boolean isFinished;
+    private boolean hadChanged;
 
 
     public Game ( GameMode gameMode1, List<Player> players){
@@ -21,9 +22,10 @@ public class Game {
         this.isFinished = false;
     }
 
-    private Game(GameMode gameMode, Board board, List<Player> players,boolean isFinished) {
+    private Game(GameMode gameMode, BoardResult board, List<Player> players, boolean isFinished) {
         this.gameMode = gameMode;
-        this.board = board;
+        this.board = board.getBoardResult();
+        this.hadChanged = board.isChanged();
         this.players = players;
         this.isFinished = isFinished;
     }
@@ -31,17 +33,20 @@ public class Game {
 
     public Game move(Position initial, Position finalPosition) {
             boolean finish = false;
-            if(board.getPiece(initial) == null){return new Game(this.gameMode,this.board,this.players,finish);}
+            if(board.getPiece(initial) == null){return new Game(this.gameMode,new BoardResult(this.board,false),this.players,finish);}
+            boolean changedValue = false;
 
             Piece piece = board.getPiece(initial);
             List<Player> players1 = copyPlayers();
             if(isTurn(piece,initial, finalPosition,players1)){
-                return new Game(this.gameMode,this.board,this.players,finish);
+                return new Game(this.gameMode,new BoardResult(this.board,false),this.players,finish);
             }
 
 
             else {
+
                 BoardResult br = this.makeMove(initial,finalPosition);
+                changedValue= br.isChanged();
                 if (br.isChanged()){
                     this.players = players1;
                     if (checkIsFinished(br.getBoardResult(),initial,finalPosition)){
@@ -49,7 +54,7 @@ public class Game {
                     }
             }}
 
-        return new Game(this.gameMode,this.board,this.players,finish);
+        return new Game(this.gameMode,new BoardResult(this.board,changedValue),this.players,finish);
 
     }
 
@@ -138,5 +143,8 @@ public class Game {
         return gameMode.getWinCondition().winCondition(board,initial,finalPosition);
     }
 
+    public boolean getHadChanged() {
+        return hadChanged;
+    }
 
 }

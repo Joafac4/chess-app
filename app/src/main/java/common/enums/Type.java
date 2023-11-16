@@ -12,6 +12,8 @@ public enum Type {
     FIRSTTOWER,
     FRSTKING,
 
+    CHANCELLOR,
+
 
 
 }

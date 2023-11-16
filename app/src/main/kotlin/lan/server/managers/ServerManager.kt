@@ -3,8 +3,7 @@ package lan.server.managers
 import com.fasterxml.jackson.core.type.TypeReference
 import common.Game
 import common.conector.Conector
-import edu.austral.dissis.chess.createGame
-import edu.austral.dissis.chess.createGameMode
+import edu.austral.dissis.chess.*
 import edu.austral.dissis.chess.gui.*
 import edu.austral.ingsis.clientserver.Message
 import edu.austral.ingsis.clientserver.Server
@@ -17,7 +16,7 @@ import lan.utils.GameViewBuilder
 
 class ServerManager : Manager {
     lateinit var server : Server
-    private var myGame : Game = createGame(createGameMode())
+    private var myGame : Game = createCheckersGame(createCheckersGM())
     val GameView = GameViewBuilder().buildServerGameView(this)
 
     fun getServerInstance() : Server {

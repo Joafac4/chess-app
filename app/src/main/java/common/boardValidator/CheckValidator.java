@@ -3,7 +3,11 @@ package common.boardValidator;
 import common.Board;
 import common.Piece;
 import common.Position;
+import common.enums.Color;
 import common.enums.Type;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class CheckValidator implements Validator{
@@ -37,19 +41,40 @@ public class CheckValidator implements Validator{
 
 
     private boolean checkChecker(Board board1, Piece piece, Position kingPosition){
-        for(int i = 1; i <= board1.getRow(); i++){
-            for(int j = 1; j <= board1.getColumn(); j++){
-                Position position = new Position(i,j);
-                if(board1.getPiece(position) != null){
-                    if(board1.getPiece(position).getColor() != piece.getColor()){
-                        if(board1.getPiece(position).moveValidation(position, kingPosition, board1)){
-                            return false;
-                        }
-                    }
-                }
+        List<Position> position = board1.getAllPositions();
+        List<Position> positions = getPositionsByPieceColor(board1, position, piece);
+        for (Position position1 : positions){
+            Piece piece1 = board1.getPiece(position1);
+            if(piece1.moveValidation(position1,kingPosition,board1)){
+                return false;
             }
         }
         return true;
     }
 
+
+    private List<Position> getPositionsByPieceColor(Board board, List<Position> pos, Piece piece) {
+        List<Position> positions = new ArrayList<>();
+        List<Position> positions1 = board.getAllPositions();
+        Color color = null;
+        if (piece.getColor() == Color.WHITE) {
+            color = Color.BLACK;
+        } else {
+            color = Color.WHITE;
+        }
+        for (Position position : positions1) {
+            Piece piece1 = board.getPiece(position);
+            if (piece1 != null) {
+                if (piece1.getColor() == color) {
+                    if(piece1.getType() != Type.KING && piece.getType() != Type.FRSTKING){
+                        positions.add(position);
+                    }}
+            }
+        }
+        return positions;
+    }
+
+
+
 }
+

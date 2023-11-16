@@ -3,6 +3,7 @@ package lan.server.listeners
 import common.conector.Conector
 import common.enums.Color
 import edu.austral.dissis.chess.gui.GameOver
+import edu.austral.dissis.chess.gui.InvalidMove
 import edu.austral.dissis.chess.gui.Move
 import edu.austral.dissis.chess.gui.NewGameState
 import edu.austral.ingsis.clientserver.Message
@@ -28,6 +29,9 @@ class MoveMessageListener(private val serverManager: ServerManager) : MessageLis
         if(game.isFinished) {
             finishGame(playerColor)
         }
+        else if(!game.hadChanged){
+            invalidMovement(InvalidMove("movimiento invalido"))
+        }
         else{nonFinishGame(newGameState)}
     }
 
@@ -43,7 +47,9 @@ class MoveMessageListener(private val serverManager: ServerManager) : MessageLis
         serverManager.handleGameOver(gameOver)
     }
 
-
+    private fun invalidMovement(invalidMove: InvalidMove){
+        serverManager.getServerInstance().broadcast(Message("invalid", invalidMove))
+    }
 
 
 }

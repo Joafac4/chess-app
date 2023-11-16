@@ -5,10 +5,7 @@ import edu.austral.dissis.chess.gui.*
 import edu.austral.ingsis.clientserver.Client
 import edu.austral.ingsis.clientserver.Message
 import edu.austral.ingsis.clientserver.netty.client.NettyClientBuilder
-import lan.client.listeners.ClientConnectionListenerImpl
-import lan.client.listeners.ClientConnectionMessageListener
-import lan.client.listeners.GameOverMessageListener
-import lan.client.listeners.NewGameMessageListener
+import lan.client.listeners.*
 import lan.common.Manager
 import lan.utils.GameViewBuilder
 import java.net.InetSocketAddress
@@ -39,12 +36,16 @@ class ClientManager : Manager{
         GameView.handleMoveResult(gameOver)
     }
 
+    fun handleInvalidMovement(invalidMove : InvalidMove ){
+        GameView.handleMoveResult(invalidMove)
+    }
     fun createClient() : Client {
         this.client = NettyClientBuilder.createDefault()
                 .withConnectionListener(ClientConnectionListenerImpl())
                 .addMessageListener("clientConnection", object : TypeReference<Message<InitialState>>() {}, ClientConnectionMessageListener(this))
                 .addMessageListener("move", object : TypeReference<Message<NewGameState>>() {}, NewGameMessageListener(this))
                 .addMessageListener("finish", object : TypeReference<Message<GameOver>>() {}, GameOverMessageListener(this))
+                .addMessageListener("invalid", object : TypeReference<Message<InvalidMove>>() {}, NewInvalidMovementListener(this))
                 .withAddress(InetSocketAddress("localhost", 8080))
                 .build()
 
