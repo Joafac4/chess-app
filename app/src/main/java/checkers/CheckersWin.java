@@ -15,14 +15,18 @@ public class CheckersWin implements WinCondition {
     @Override
     public boolean winCondition(Board board, Position initial, Position finalPosition) {
         Piece piece = board.getPiece(finalPosition);
-        if (piece.getColor() == Color.WHITE) {color = Color.BLACK;}
-        else {color = Color.WHITE;}
+        establishColor(piece);
 
         List<Position> positions = board.getAllPositions();
         List<Position> colorInCheckPositions = getPositionsByPieceColor(board, positions, color);
 
         return colorInCheckPositions.isEmpty();
 
+    }
+
+    private void establishColor(Piece piece) {
+        if (piece.getColor() == Color.WHITE) {color = Color.BLACK;}
+        else {color = Color.WHITE;}
     }
 
 

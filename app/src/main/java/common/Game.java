@@ -33,11 +33,11 @@ public class Game {
 
     public Game move(Position initial, Position finalPosition) {
             boolean finish = false;
-            if(board.getPiece(initial) == null){return new Game(this.gameMode,new BoardResult(this.board,false),this.players,finish);}
-            boolean changedValue = false;
-
+            if(isPiece(initial)){return new Game(this.gameMode,new BoardResult(this.board,false),this.players,finish);}
             Piece piece = board.getPiece(initial);
             List<Player> players1 = copyPlayers();
+
+
             if(isTurn(piece,initial, finalPosition,players1)){
                 return new Game(this.gameMode,new BoardResult(this.board,false),this.players,finish);
             }
@@ -46,28 +46,19 @@ public class Game {
             else {
 
                 BoardResult boardResult = this.makeMove(initial,finalPosition);
-                if (boardResult.isChanged()){
-                    this.players = players1;
-                    if (checkIsFinished(boardResult.getBoardResult(),initial,finalPosition)){
-                        finish = true;
-                    }
+                finish = checkBoardResult(boardResult,initial,finalPosition,players1);
+                return new Game(this.gameMode,boardResult,this.players,finish);
 
             }
-            return new Game(this.gameMode,boardResult,this.players,finish);
-            }
+
+
 
     }
 
-    private boolean isTurn(Piece piece, Position initial, Position finalPosition, List<Player> players) {
-        return piece.getColor() != gameMode.getTurn().isTurn(players, initial, finalPosition, board).getColor();
-    }
 
 
     private BoardResult makeMove(Position initial, Position finalPosition){
         Board board = this.board;
-
-        if(board.getPiece(initial) == null){return new BoardResult(board,false);}
-
 
         if (board.mover(initial,finalPosition)){
 
@@ -86,6 +77,17 @@ public class Game {
 
     }
     return new BoardResult(board,false);
+    }
+
+
+    private boolean checkBoardResult(BoardResult boardResult,Position initial, Position finalPosition, List<Player> players1){
+        if (boardResult.isChanged()) {
+            this.players = players1;
+            if (checkIsFinished(boardResult.getBoardResult(), initial, finalPosition)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
@@ -149,8 +151,12 @@ public class Game {
     }
 
 
-    public boolean checkPiece(Position position){
-        return board.getPiece(position) != null;
+    private boolean isPiece(Position initial) {
+        return board.getPiece(initial) == null;
+    }
+
+    private boolean isTurn(Piece piece, Position initial, Position finalPosition, List<Player> players) {
+        return piece.getColor() != gameMode.getTurn().isTurn(players, initial, finalPosition, board).getColor();
     }
 
 }

@@ -2,6 +2,7 @@ package checkers;
 
 import common.*;
 import common.enums.Color;
+import common.enums.Type;
 import common.movement2.*;
 import common.movement2.strategyMovement.*;
 import common.turn.Turn;
@@ -33,14 +34,14 @@ public class CheckersTurn implements Turn {
         board1.put(initial,null);
 
 
-        Movement2 eatMovement = getEatMovements(color,finalPosition);
+        Movement2 eatMovement = getEatMovements(color,finalPosition,board);
         return canStillEat(finalPosition, board1, eatMovement,color);
     }
 
 
 
 
-    private Movement2 getEatMovements(Color color, Position finalPosition){
+    private Movement2 getEatMovements(Color color, Position finalPosition, Board board){
         List<Movement2> validateMovements = new ArrayList<>();
         validateMovements.add(new NoEatStrategy());
         validateMovements.add(new DiagonalObligatoryTrepassin());
@@ -56,6 +57,9 @@ public class CheckersTurn implements Turn {
         }
     }
 
+    private static boolean checkRow(Position finalPosition, int row) {
+        return finalPosition.getRow() == row;
+    }
 
     private static boolean canStillEat(Position finalPosition,Board board, Movement2 eatMovement,Color color){
         List<Position> positions = board.getAllPositions();

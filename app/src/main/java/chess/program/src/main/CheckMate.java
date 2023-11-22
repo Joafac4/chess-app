@@ -39,12 +39,16 @@ public class CheckMate implements WinCondition {
             Piece piece = board.getPiece(position);
             if (piece != null) {
                 if (piece.getColor() == color) {
-                    if(piece.getType() != Type.KING && piece.getType() != Type.FRSTKING){
+                    if(isKing(piece)){
                     positions.add(position);
                 }}
             }
         }
         return positions;
+    }
+
+    private static boolean isKing(Piece piece) {
+        return piece.getType() != Type.KING && piece.getType() != Type.FRSTKING;
     }
 
 

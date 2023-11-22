@@ -16,7 +16,7 @@ import lan.utils.GameViewBuilder
 
 class ServerManager : Manager {
     lateinit var server : Server
-    private var myGame : Game = createCheckersGame(createCheckersGM())
+    private var myGame : Game = createGame(createGameMode())
     val GameView = GameViewBuilder().buildServerGameView(this)
 
     fun getServerInstance() : Server {
