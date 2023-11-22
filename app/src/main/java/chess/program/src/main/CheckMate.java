@@ -54,6 +54,8 @@ public class CheckMate implements WinCondition {
         Board board1 = board.copy();
         return piece.moveValidation(finalPosition,kingPosition,board1);
     }
+
+
     private boolean kingIsAbleToMove(Board board, Color color){
         Position position = board.getKingPosition(color);
         Piece piece = board.getPiece(position);

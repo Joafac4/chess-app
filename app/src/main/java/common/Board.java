@@ -65,7 +65,20 @@ public Board(Board board) {
     }
 
     public Board copy(){
-    Map<Position, Piece> copiedMap = new HashMap<>(casilleros);
+    Map<Position, Piece> copiedMap = new HashMap<>();
+    casilleros.forEach((key, value) -> {
+        Position newPosition = new Position(key.getRow(), key.getColumn());
+        if(value != null){
+            String id = value.getId();
+            Piece piece = new PieceImpl(value);
+            piece.setId(id);
+        copiedMap.put(newPosition, piece);}
+        else {
+            copiedMap.put(newPosition, null);
+        }
+    }
+    );
+    //Map<Position, Piece> copiedMap = new HashMap<>(casilleros);
     return new Board(copiedMap,this.row,this.column);
     }
 

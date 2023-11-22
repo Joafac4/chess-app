@@ -53,7 +53,9 @@ public class PriorityMovement implements Validator {
 
 
 
-
+    private boolean isPieceSameColor(Piece piece) {
+        return piece.getColor() != color;
+    }
 
 
 }

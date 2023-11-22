@@ -1,4 +1,4 @@
-package lan.utils
+package lan.client.listeners
 
 import edu.austral.dissis.chess.gui.GameEventListener
 import edu.austral.dissis.chess.gui.Move

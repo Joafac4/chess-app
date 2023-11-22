@@ -4,7 +4,6 @@ import common.Board;
 import common.Piece;
 import common.Position;
 import common.movement2.Movement2;
-import edu.austral.dissis.chess.gui.Move;
 
 public class DiagonalTrepassinStrategy implements Movement2 {
     @Override

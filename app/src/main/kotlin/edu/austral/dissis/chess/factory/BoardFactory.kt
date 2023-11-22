@@ -150,6 +150,21 @@ class BoardFactory {
         return board
     }
 
+    fun testBoard() : Board{
+        val board = Board(HashMap(), 8, 8)
+        board.put(Position(1, 5), PieceImpl(Color.WHITE, Type.FRSTKING, listOf(ComposeMovement(listOf(HorizontalAndVerticalMovement(2, 2, 1, 1),HorizontalTrepassinValidator())),ComposeMovement(listOf(DiagonalMovement(1, 1, 1, 1),DiagonalTrepassinStrategy())))))
+        board.put(Position(8, 5), PieceImpl(Color.BLACK, Type.FRSTKING, listOf(ComposeMovement(listOf(HorizontalAndVerticalMovement(2, 2, 1, 1),HorizontalTrepassinValidator())),ComposeMovement(listOf(DiagonalMovement(1, 1, 1, 1),DiagonalTrepassinStrategy())))))
+
+
+        return board
+    }
+
+    fun checkersWInTestBoard() : Board{
+        val board = Board(HashMap(), 8, 8)
+        board.put(Position(4, 4), PieceImpl(Color.WHITE, Type.KNIGHT, listOf(ComposeMovement(listOf(DiagonalMovement(2, 2, 2, 0), DiagonalObligatoryTrepassin(), NoEatStrategy())), ComposeMovement(listOf(DiagonalMovement(1, 1, 1, 0), NoEatStrategy())))))
+        board.put(Position(5, 5), PieceImpl(Color.BLACK, Type.KNIGHT, listOf(ComposeMovement(listOf(DiagonalMovement(2, 2, 2, 0), DiagonalObligatoryTrepassin(), NoEatStrategy())), ComposeMovement(listOf(DiagonalMovement(1, 1, 1, 0), NoEatStrategy())))))
+        return board
+    }
 
 
 }

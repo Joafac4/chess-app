@@ -45,16 +45,16 @@ public class Game {
 
             else {
 
-                BoardResult br = this.makeMove(initial,finalPosition);
-                changedValue= br.isChanged();
-                if (br.isChanged()){
+                BoardResult boardResult = this.makeMove(initial,finalPosition);
+                if (boardResult.isChanged()){
                     this.players = players1;
-                    if (checkIsFinished(br.getBoardResult(),initial,finalPosition)){
+                    if (checkIsFinished(boardResult.getBoardResult(),initial,finalPosition)){
                         finish = true;
                     }
-            }}
 
-        return new Game(this.gameMode,new BoardResult(this.board,changedValue),this.players,finish);
+            }
+            return new Game(this.gameMode,boardResult,this.players,finish);
+            }
 
     }
 
@@ -64,6 +64,7 @@ public class Game {
 
 
     private BoardResult makeMove(Position initial, Position finalPosition){
+        Board board = this.board;
 
         if(board.getPiece(initial) == null){return new BoardResult(board,false);}
 
@@ -81,7 +82,7 @@ public class Game {
             board.put(finalPosition, board.getPiece(initial));
             board.put(initial, null);
             System.out.println("Movimiento valido");
-            return new BoardResult(this.board,true);
+            return new BoardResult(board,true);
 
     }
     return new BoardResult(board,false);
@@ -145,6 +146,11 @@ public class Game {
 
     public boolean getHadChanged() {
         return hadChanged;
+    }
+
+
+    public boolean checkPiece(Position position){
+        return board.getPiece(position) != null;
     }
 
 }

@@ -6,7 +6,6 @@ import common.Position;
 import common.movement2.Movement2;
 
 public class DiagonalObligatoryTrepassin implements Movement2 {
-    private  DiagonalTrepassinStrategy diagonalObligatoryTrepassin = new DiagonalTrepassinStrategy();
 
     @Override
     public boolean move(Board board, Position initial, Position finalPosition) {

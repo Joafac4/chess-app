@@ -22,21 +22,25 @@ public class CheckValidator implements Validator{
             Position kingPosition = board1.getKingPosition(piece.getColor());
             return checkChecker(board1, piece, kingPosition);}
         else{
-            if(Math.abs(finalPosition.getColumn()-initial.getColumn()) == 2){
-            int x = initial.getRow();
-            int y = (initial.getColumn() + finalPosition.getColumn())/2;
-            Position middlePosition = new Position(x,y);
-            return checkChecker(board1, piece, initial) &&
-                   checkChecker(board1, piece, finalPosition) &&
-                   checkChecker(board1, piece, middlePosition);
-            }
-            else {
-                board1.put(finalPosition, piece);
-                board1.put(initial, null);
-                return checkChecker(board1, piece, finalPosition);
-            }
+            return validateCheckIfPieceIsntKing(initial, finalPosition, board1, piece);
         }
 
+    }
+
+    private boolean validateCheckIfPieceIsntKing(Position initial, Position finalPosition, Board board1, Piece piece) {
+        if(Math.abs(finalPosition.getColumn()- initial.getColumn()) == 2){
+        int x = initial.getRow();
+        int y = (initial.getColumn() + finalPosition.getColumn())/2;
+        Position middlePosition = new Position(x,y);
+            return checkChecker(board1, piece, initial) &&
+                    checkChecker(board1, piece, finalPosition) &&
+                    checkChecker(board1, piece, middlePosition);
+        }
+        else {
+            board1.put(finalPosition, piece);
+            board1.put(initial, null);
+            return checkChecker(board1, piece, finalPosition);
+        }
     }
 
 
@@ -55,18 +59,17 @@ public class CheckValidator implements Validator{
 
     private List<Position> getPositionsByPieceColor(Board board, List<Position> pos, Piece piece) {
         List<Position> positions = new ArrayList<>();
-        List<Position> positions1 = board.getAllPositions();
         Color color = null;
         if (piece.getColor() == Color.WHITE) {
             color = Color.BLACK;
         } else {
             color = Color.WHITE;
         }
-        for (Position position : positions1) {
+        for (Position position : pos) {
             Piece piece1 = board.getPiece(position);
             if (piece1 != null) {
                 if (piece1.getColor() == color) {
-                    if(piece1.getType() != Type.KING && piece.getType() != Type.FRSTKING){
+                    if(piece1.getType() != Type.KING && piece1.getType() != Type.FRSTKING){
                         positions.add(position);
                     }}
             }

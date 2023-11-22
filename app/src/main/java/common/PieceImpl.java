@@ -19,6 +19,7 @@ public class PieceImpl implements Piece{
         this.type = piece.getType();
         movements = piece.getMovements();
         this.id = String.valueOf(hashCode());
+        //this.id = piece.getId();
     }
     public PieceImpl(Color color1, Type name1, List<ComposeMovement> movements1) {
         this.color = color1;

@@ -41,11 +41,13 @@ public class Eat implements BoardMovement {
 
     private BoardResult handleEatMovement(Board board1, int desplazamientox, int desplazamientoy, Position finalPosition, Position inicial, Piece piece){
         BoardResult temporalBoardResult = null;
-        if (piece.getColor() == Color.WHITE && finalPosition.getRow() == 8){
-            temporalBoardResult = whiteCoronation.move(board1,inicial,finalPosition);
-        }
-        if (piece.getColor() == Color.BLACK && finalPosition.getRow() == 1){
-            temporalBoardResult = blackCoronation.move(board1,inicial,finalPosition);
+        if(piece.getType() != Type.QUEEN) {
+            if (piece.getColor() == Color.WHITE && finalPosition.getRow() == 8) {
+                temporalBoardResult = whiteCoronation.move(board1, inicial, finalPosition);
+            }
+            if (piece.getColor() == Color.BLACK && finalPosition.getRow() == 1) {
+                temporalBoardResult = blackCoronation.move(board1, inicial, finalPosition);
+            }
         }
 
         if(temporalBoardResult == null){

@@ -27,6 +27,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("edu.austral.dissis.chess:chess-ui:2.0.0")
     implementation("edu.austral.dissis.chess:simple-client-server:1.2.0")
+    testImplementation("org.testng:testng:7.7.0")
+    testImplementation("junit:junit:4.13.1")
 }
 
 javafx {

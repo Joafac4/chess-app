@@ -3,8 +3,8 @@ package lan.utils
 import edu.austral.dissis.chess.gui.CachedImageResolver
 import edu.austral.dissis.chess.gui.DefaultImageResolver
 import edu.austral.dissis.chess.gui.GameView
+import lan.client.listeners.ClientGameEventListener
 import lan.client.managers.ClientManager
-import lan.server.listeners.MoveMessageListener
 import lan.server.managers.ServerManager
 
 class GameViewBuilder  {
